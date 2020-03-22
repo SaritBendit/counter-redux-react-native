@@ -27,17 +27,15 @@ import { bindActionCreators } from 'redux';
 
 class App extends Component {
   decrementCount = () => {
-    let { count, actions } = this.props;
-    count--;
-    actions.changeCount(count);
+    let { count } = this.props;
+    this.props.dispatch(changeCount(count-1));
   }
   incrementCount = () => {
-    let { count, actions } = this.props;
-    count++;
-    actions.changeCount(count);
+    let { count } = this.props;
+    this.props.dispatch(changeCount(count+1));
   }
   render() {
-    const { count } = this.props.count;
+    const { count } = this.props;
     return (
       <>
         <SafeAreaView>
@@ -62,15 +60,7 @@ class App extends Component {
 
 }
 const mapStateToProps = state => ({
-  count: state.count,
+  count: state.count.count,
 });
 
-const ActionCreators = Object.assign(
-  {},
-  changeCount,
-);
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(ActionCreators, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps)(App)
